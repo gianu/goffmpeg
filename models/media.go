@@ -34,6 +34,7 @@ type Mediafile struct {
 	duration              string
 	durationInput         string
 	seekTime              string
+	toTime				  string
 	quality               int
 	strict                int
 	muxDelay              string
@@ -172,6 +173,10 @@ func (m *Mediafile) SetDurationInput(v string) {
 
 func (m *Mediafile) SetSeekTime(v string) {
 	m.seekTime = v
+}
+
+func (m *Mediafile) SetToTime(v string) {
+	m.toTime = v
 }
 
 func (m *Mediafile) SetSeekTimeInput(v string) {
@@ -365,6 +370,10 @@ func (m *Mediafile) SeekTime() string {
 	return m.seekTime
 }
 
+func (m *Mediafile) ToTime() string {
+	return m.toTime
+}
+
 func (m *Mediafile) Preset() string {
 	return m.preset
 }
@@ -510,6 +519,7 @@ func (m *Mediafile) ToStrCommand() []string {
 		"Tune",
 		"Target",
 		"SeekTime",
+		"ToTime",
 		"Duration",
 		"CopyTs",
 		"StreamIds",
@@ -726,6 +736,13 @@ func (m *Mediafile) ObtainSeekTime() []string {
 func (m *Mediafile) ObtainSeekTimeInput() []string {
 	if m.seekTimeInput != "" {
 		return []string{"-ss", m.seekTimeInput}
+	}
+	return nil
+}
+
+func (m *Mediafile) ObtainToTime() []string {
+	if m.toTime != "" {
+		return []string{"-to", m.toTime}
 	}
 	return nil
 }
